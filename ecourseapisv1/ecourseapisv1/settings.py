@@ -30,7 +30,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,11 +43,17 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'rest_framework',
-    'drf_yasg'
+    'drf_yasg',
+    'oauth2_provider'
 ]
 
 CKEDITOR_UPLOAD_PATH = "images/ckeditors/"
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+    )
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -80,7 +85,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecourseapisv1.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -90,21 +94,23 @@ DATABASES = {
         'NAME': 'coursedbv3',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': '' # mặc định localhost
+        'HOST': ''  # mặc định localhost
     }
 }
 
 AUTH_USER_MODEL = 'courses.User'
 
 import pymysql
+
 pymysql.version_info = (2, 2, 1, 'final', 0)
 pymysql.install_as_MySQLdb()
 
 import cloudinary.api
+
 cloudinary.config(
-  	cloud_name = "dxxwcby8l",
-  	api_key = "792844686918347",
-  	api_secret = "T8ys_Z9zaKSqmKWa4K1RY6DXUJg"
+    cloud_name="dxxwcby8l",
+    api_key="792844686918347",
+    api_secret="T8ys_Z9zaKSqmKWa4K1RY6DXUJg"
 )
 
 # Password validation
@@ -125,7 +131,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -137,7 +142,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -147,3 +151,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CLIENT_ID = '9rufKdtGbXooau8Z85lde86HJS4NzlhELnAzSbgR'
+CLIENT_SECRET = 'EncHFn4ex1Jzkmv3cZTCAqmZlnQ9UfSSwPwOOEAg4HyTCky8B7sPQXhUSZAvtjlffOUzsyQDS3VOF9EHvHk0Cor8PeLNAbfXc9KhJOJYx6pUiJSnMQcx6l3FUYGz9hjW'
