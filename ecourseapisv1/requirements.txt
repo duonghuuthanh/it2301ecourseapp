@@ -4,6 +4,7 @@ cloudinary==1.44.1
 Django==6.0.3
 django-ckeditor==6.7.3
 django-js-asset==3.1.2
+django-oauth2-provider==0.2.6.1
 djangorestframework==3.17.1
 drf-yasg==1.21.15
 inflection==0.5.1
@@ -11,6 +12,7 @@ packaging==26.0
 PyMySQL==1.1.2
 pytz==2026.1.post1
 PyYAML==6.0.3
+shortuuid==1.0.13
 six==1.17.0
 sqlparse==0.5.5
 tzdata==2025.3
