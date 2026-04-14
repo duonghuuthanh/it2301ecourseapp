@@ -44,9 +44,8 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'rest_framework',
     'drf_yasg',
-    # 'provider',
-    # 'provider.oauth2'
-    'oauth2_provider'
+    'oauth2_provider',
+    'corsheaders'
 ]
 
 CKEDITOR_UPLOAD_PATH = "images/ckeditors/"
@@ -58,6 +57,7 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -66,6 +66,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS=True
+
+ALLOWED_HOSTS = ['192.168.0.79']
+
+OAUTH2_PROVIDER = { 'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore' }
 
 ROOT_URLCONF = 'ecourseapisv1.urls'
 
