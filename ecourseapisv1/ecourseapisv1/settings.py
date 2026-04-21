@@ -12,12 +12,14 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
-from django.conf.global_settings import AUTH_USER_MODEL
+from django.conf.global_settings import AUTH_USER_MODEL, ALLOWED_HOSTS
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 MEDIA_ROOT = '%s/courses/static/' % BASE_DIR
+
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -28,7 +30,7 @@ SECRET_KEY = 'django-insecure-g%_)bfua&skk3dqaqf8fxmbddqgea-1@+906n1-a#0md#_4^(n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.2.23']
 
 # Application definition
 
@@ -69,7 +71,6 @@ MIDDLEWARE = [
 
 CORS_ALLOW_ALL_ORIGINS=True
 
-ALLOWED_HOSTS = []
 
 OAUTH2_PROVIDER = { 'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore' }
 
