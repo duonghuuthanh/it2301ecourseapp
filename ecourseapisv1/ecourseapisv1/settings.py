@@ -69,7 +69,7 @@ MIDDLEWARE = [
 
 CORS_ALLOW_ALL_ORIGINS=True
 
-ALLOWED_HOSTS = ['192.168.0.79']
+ALLOWED_HOSTS = []
 
 OAUTH2_PROVIDER = { 'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore' }
 
@@ -99,7 +99,7 @@ WSGI_APPLICATION = 'ecourseapisv1.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'coursedbv3',
+        'NAME': 'prodcoursedb',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': ''  # mặc định localhost
