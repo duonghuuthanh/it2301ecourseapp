@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-#94i$&s-kcg$&d$vq3)3ilfz5dnmcg2w=&bviicnn79j$068p#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -48,6 +48,8 @@ INSTALLED_APPS = [
 ]
 
 AUTH_USER_MODEL = 'courses.User'
+
+OAUTH2_PROVIDER = { 'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore' }
 
 CKEDITOR_UPLOAD_PATH = "images/ckeditors/"
 
@@ -152,5 +154,5 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CLIENT_ID = 'BSwkTfUtIjWJokOnkSiOIFqqCixrrMoxBb4TYSLh'
-CLIENT_SECRECT = 'yVyIpb2yCMxoHVxHMMIpy01AvV98fZBFsnmoUXqOIcHFcHeQcHV8USEXijrcddZML1Hpc8JzMNrm14hUZwPsEpCJMrBr6QfrU8cgnNwmQlSN4h6OrdjctjEIYODmaHmB'
+CLIENT_ID = 'pLsnEfSvl60yhsbATvvvCRaqdO7uJPY5HBO9H6S4'
+CLIENT_SECRECT = 'GdNisvKpv5meLz9VCtnTLPhczHjI9mTqWdBngiZDrigOI8NkZ6HiFaSFO7GEmwwyxuEdtfoWAKNRifPZAGK8ZlQEf0XldgLCKS1wpkmuczm0Enm7gZqrFFNf09ezdjWZ'

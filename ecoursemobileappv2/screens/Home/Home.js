@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, Image, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import Apis, { endpoints } from "../../configs/Apis";
 import { List, Searchbar } from "react-native-paper";
 import Styles from "../../styles/Styles";
+import Header from "../../components/Header";
+import { useNavigation } from "@react-navigation/native";
+import MyItem from "../../components/MyItem";
 
-const Home = ({cateId}) => {
+const Home = () => {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(false);
     const [q, setQ] = useState("");
     const [page, setPage] = useState(1);
+    const [cateId, setCateId] = useState(null);
+    const nav = useNavigation();
 
     const loadCourses = async () => {
         try {
@@ -23,8 +28,6 @@ const Home = ({cateId}) => {
             if (cateId) {
                 url = `${url}&category_id=${cateId}`;
             }
-
-            console.info(url);
 
             let res = await Apis.get(url);
             if (page === 1)
@@ -50,24 +53,24 @@ const Home = ({cateId}) => {
         return () => clearTimeout(timer);
     }, [q, cateId, page]);
 
+    useEffect(() => {
+        setPage(1);
+    }, [q, cateId]);
+
     const loadMore = () => {
         if (page > 0 && !loading)
             setPage(page + 1);
     }
 
     return (
-        <View>
-            <Searchbar value={q} onChangeText={setQ}
-                placeholder="Tìm khóa học" />
+        <View style={Styles.padding}>
+            <Header cateId={cateId} setCateId={setCateId} />
+            <Searchbar value={q} onChangeText={setQ} placeholder="Tìm khóa học" />
 
             <FlatList onEndReached={loadMore}
                     data={courses} ListFooterComponent={loading && <ActivityIndicator />}
-                    renderItem={({item}) => <List.Item
-                                title={item.subject}
-                                description={item.created_date}
-                                left={props => <Image style={Styles.avatar} source={{uri: item.image}} />}
-                            />} />
-            
+                    renderItem={({item}) => <MyItem key={item.id} item={item} 
+                                                    next={() => nav.navigate('lessons', {courseId: item.id})} />} />
         </View>
     );
 }

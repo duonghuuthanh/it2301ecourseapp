@@ -2,9 +2,22 @@ import axios from "axios";
 
 export const endpoints = {
     'categories': '/categories/',
-    'courses': '/courses/'
+    'courses': '/courses/',
+    'lessons': (courseId) => `/courses/${courseId}/lessons/`,
+    'register': '/users/',
+    'login': '/o/token/',
+    'current-user': '/users/current-user/'
+}
+
+export const authApis = (token) => {
+    return axios.create({
+        baseURL: 'http://192.168.2.23:8000/',
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
 }
 
 export default axios.create({
-    baseURL: 'http://192.168.0.79:8000/'
+    baseURL: 'http://192.168.2.23:8000/'
 })

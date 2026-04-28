@@ -4,7 +4,7 @@ import Apis, { endpoints } from "../configs/Apis";
 import { Chip } from "react-native-paper";
 import Styles from "../styles/Styles";
 
-const Header = ({setCateId}) => {
+const Header = ({cateId, setCateId}) => {
     const [categories, setCategories] = useState([]);
 
     const loadCategories = async () => {
@@ -23,11 +23,11 @@ const Header = ({setCateId}) => {
     return (
         <View style={[Styles.row, Styles.wrap]}>
             <TouchableOpacity onPress={() => setCateId(null)} style={Styles.padding}>
-                <Chip icon="label">Tất cả</Chip>
+                <Chip mode={cateId===null?"outlined":"flat"} icon="label">Tất cả</Chip>
             </TouchableOpacity>
 
-            {categories.map(c => <TouchableOpacity onPress={() => setCateId(c.id)} style={Styles.padding}  key={c.id}>
-                <Chip icon="label">{c.name}</Chip>
+            {categories.map(c => <TouchableOpacity onPress={() => setCateId(c.id)} style={Styles.padding}  key={`c${c.id}`}>
+                <Chip mode={cateId===c.id?"outlined":"flat"} icon="label">{c.name}</Chip>
             </TouchableOpacity>)}
         </View>
     );

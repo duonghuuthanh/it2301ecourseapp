@@ -14,10 +14,15 @@ export default StyleSheet.create({
     padding: {
         padding: 5
     },
+    margin: {
+        margin: 5
+    },
     subject: {
         fontSize: 24,
         fontWeight: "bold",
-        color: "blue"
+        color: "blue",
+        textAlign: "center",
+        marginTop: 5
     },
     avatar: {
         width: 80,
