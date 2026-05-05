@@ -15,7 +15,8 @@ export default StyleSheet.create({
     }, subject: {
         fontSize: 30,
         fontWeight: "bold",
-        color: "blue"
+        color: "blue",
+        textAlign: "center"
     }, avatar: {
         width: 80,
         height: 80,

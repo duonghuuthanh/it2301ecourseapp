@@ -4,11 +4,14 @@ import Apis, { endpoints } from "../../configs/Apis";
 import { List, Searchbar } from "react-native-paper";
 import Styles from "../../styles/Styles";
 import { useNavigation } from "@react-navigation/native";
+import Header from "../../components/Header";
+import MyItem from "../../components/MyItem";
 
-const Home = ({cateId}) => {
+const Home = () => {
     const [courses, setCourses] = useState([]);
     const [loading, setLoading] = useState(false);
     const [q, setQ] = useState("");
+    const [cateId, setCateId] = useState(null);
     const [page, setPage] = useState(1);
     const nav = useNavigation();
 
@@ -59,18 +62,13 @@ const Home = ({cateId}) => {
 
     return (
         <View>
+            <Header cateId={cateId} setCateId={setCateId} />
             <Searchbar value={q} onChangeText={setQ}
                 placeholder="Tìm khóa học..." />
 
             <FlatList onEndReached={loadMore} 
                     ListFooterComponent={loading && <ActivityIndicator />} 
-                    data={courses} renderItem={ ({item}) => <List.Item
-                                                                    title={item.subject}
-                                                                    description={item.created_date}
-                                                                    left={() => <TouchableOpacity onPress={() => nav.navigate('lessons', {'courseId': item.id})}>
-                                                                        <Image style={Styles.avatar} source={{uri: item.image}} />
-                                                                    </TouchableOpacity>}
-                                                                />} />
+                    data={courses} renderItem={ ({item}) => <MyItem key={item.id} item={item} next={() => nav.navigate('lessons', {'courseId': item.id})} />} />
             
         </View>
     );

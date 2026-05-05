@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-g%_)bfua&skk3dqaqf8fxmbddqgea-1@+906n1-a#0md#_4^(n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.2.23']
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -161,5 +161,5 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CLIENT_ID = '9rufKdtGbXooau8Z85lde86HJS4NzlhELnAzSbgR'
-CLIENT_SECRET = 'EncHFn4ex1Jzkmv3cZTCAqmZlnQ9UfSSwPwOOEAg4HyTCky8B7sPQXhUSZAvtjlffOUzsyQDS3VOF9EHvHk0Cor8PeLNAbfXc9KhJOJYx6pUiJSnMQcx6l3FUYGz9hjW'
+CLIENT_ID = 'kPWFlwLyiqLXERBb5eLKweI18DctNC9mCThs06GO'
+CLIENT_SECRET = 'YKmrXKVdgpjlTVjcvB7A32X2yuJl3DZhLHLPiT3iUDDq1pXCsg6gWH8enSkK59AgsATiTQRAiVP36zN0FY1nMcwMzh0zpMfmK89YDOw47HuiycxYWDYFNO4ABJ2YnGJA'
