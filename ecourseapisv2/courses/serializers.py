@@ -90,7 +90,7 @@ class UserSerializer(SimpleUserSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['id', 'content', 'user', 'lesson']
+        fields = ['id', 'content', 'user', 'lesson', 'created_date']
         extra_kwargs = {
             'lesson': {
                 'write_only': True

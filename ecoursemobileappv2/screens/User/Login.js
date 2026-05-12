@@ -1,10 +1,11 @@
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import Styles from "../../styles/Styles";
 import { Button, HelperText, TextInput } from "react-native-paper";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Apis, { authApis, endpoints } from "../../configs/Apis";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { MyUserContext } from "../../configs/Contexts";
 
 const Login = () => {
 
@@ -23,6 +24,7 @@ const Login = () => {
     const [err, setErr] = useState(null);
     const nav = useNavigation();
     const [loading, setLoading] = useState(false);
+    const [, dispatch] = useContext(MyUserContext);
 
 
 
@@ -55,8 +57,12 @@ const Login = () => {
 
 
                 setTimeout(async () => {
-                    let user = await authApis(res.data.access_token).get(endpoints['current-user']);
-                    console.info(user.data);
+                    let u = await authApis(res.data.access_token).get(endpoints['current-user']);
+                    
+                    dispatch({
+                        "type": "LOGIN",
+                        "payload": u.data
+                    })
 
                 }, 500);
             } catch (ex) {
