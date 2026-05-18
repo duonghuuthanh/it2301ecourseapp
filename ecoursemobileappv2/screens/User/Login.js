@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MyUserContext } from "../../configs/Contexts";
 
-const Login = () => {
+const Login = ({ route }) => {
 
     const userInfo = [{
         field: 'username',
@@ -25,8 +25,7 @@ const Login = () => {
     const nav = useNavigation();
     const [loading, setLoading] = useState(false);
     const [, dispatch] = useContext(MyUserContext);
-
-
+    const next = route.params?.next || "home";
 
     const validate = () => {
         if (!user.username)
@@ -39,32 +38,33 @@ const Login = () => {
 
     const login = async () => {
         if (validate()) {
-            
 
             try {
                 setLoading(true);
 
                 let res = await Apis.post(endpoints['login'], {
-                    ...user, 
-                    'client_id': 'pLsnEfSvl60yhsbATvvvCRaqdO7uJPY5HBO9H6S4',
-                    'client_secret': 'GdNisvKpv5meLz9VCtnTLPhczHjI9mTqWdBngiZDrigOI8NkZ6HiFaSFO7GEmwwyxuEdtfoWAKNRifPZAGK8ZlQEf0XldgLCKS1wpkmuczm0Enm7gZqrFFNf09ezdjWZ',
+                    ...user,
+                    'client_id': 'yov5fEFnCDCNee1DXzFVYQg9F3Jo9XuRKNhUkC3Y',
+                    'client_secret': '0amImsdzdjR2g3uASzSJr03RiBLRYLqxB0OQ34z8YBVO04BSaKdKI19Hf9cnWyd8vKpl8itT4NOT72lfQNSO4gtuHrwOqfuEy6T88wHZTW7rHUs58UNw7bGXMoWgpxcy',
                     'grant_type': 'password'
                 })
 
                 // AsyncS
-                // console.info(res.data);
+                console.info(res.data);
                 await AsyncStorage.setItem('token', res.data.access_token);
 
 
-                setTimeout(async () => {
-                    let u = await authApis(res.data.access_token).get(endpoints['current-user']);
-                    
-                    dispatch({
-                        "type": "LOGIN",
-                        "payload": u.data
-                    })
+                // setTimeout(async () => {
+                let u = await authApis(res.data.access_token).get(endpoints['current-user']);
 
-                }, 500);
+                dispatch({
+                    "type": "LOGIN",
+                    "payload": u.data
+                })
+
+                nav.navigate(next, route.params?.params);
+
+                // }, 500);
             } catch (ex) {
                 console.error(ex);
             } finally {
@@ -79,12 +79,12 @@ const Login = () => {
                 {err}
             </HelperText>
             {userInfo.map(u => <TextInput value={user[u.field]} key={u.field}
-                                        onChangeText={(t) => setUser({...user, [u.field]: t})} 
-                                        style={Styles.margin} label={u.title} placeholder={u.title} 
-                                        secureTextEntry={u.secureTextEntry}
-                                        right={<TextInput.Icon icon={u.icon} />} />)}
+                onChangeText={(t) => setUser({ ...user, [u.field]: t })}
+                style={Styles.margin} label={u.title} placeholder={u.title}
+                secureTextEntry={u.secureTextEntry}
+                right={<TextInput.Icon icon={u.icon} />} />)}
 
-            
+
             <Button loading={loading} disabled={loading} mode="contained" onPress={login}>Đăng nhập</Button>
 
         </View>

@@ -8,19 +8,27 @@ import moment from "moment";
 import 'moment/locale/vi';
 import { MyUserContext } from "../../configs/Contexts";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Link } from "@react-navigation/native";
+import { Link, useNavigation } from "@react-navigation/native";
 
-const LessonDetails = ({route}) => {
+const LessonDetails = ({ route }) => {
     const lessonId = route.params?.lessonId;
     const [loading, setLoading] = useState(false)
     const [lesson, setLesson] = useState();
     const [comments, setComments] = useState([]);
-    const [user, ] = useContext(MyUserContext);
+    const [user,] = useContext(MyUserContext);
     const [content, setContent] = useState();
+    const nav = useNavigation();
 
     const loadLesson = async () => {
-        let res = await Apis.get(endpoints['lesson-details'](lessonId));
-        setLesson(res.data);
+        try {
+            setLoading(true);
+            let res = await Apis.get(endpoints['lesson-details'](lessonId));
+            setLesson(res.data);
+        } catch (ex) {
+            console.error(ex);
+        } finally {
+            setLoading(false);
+        }
     }
 
     const loadComments = async () => {
@@ -34,8 +42,9 @@ const LessonDetails = ({route}) => {
     }, [lessonId]);
 
     const addComment = async () => {
-        let token = await AsyncStorage.getItem('token')
-        let res = await authApis(token).post(endpoints['comments'], {
+        let token = await AsyncStorage.getItem('token');
+
+        let res = await authApis(token).post(endpoints['comments'](lessonId), {
             'content': content
         });
 
@@ -45,7 +54,7 @@ const LessonDetails = ({route}) => {
     return (
         <ScrollView>
             <Text style={Styles.subject}>CHI TIẾT BÀI HỌC {lessonId}</Text>
-            {loading === false && <ActivityIndicator />}
+            {loading && <ActivityIndicator />}
 
             {lesson && <>
                 <Card>
@@ -53,28 +62,32 @@ const LessonDetails = ({route}) => {
                     <Card.Title title={lesson.subject} />
                     <Card.Content>
                         {/* <Text variant="titleLarge">{lesson.content}</Text> */}
-                        <RenderHTML source={{html: lesson.content}} />
+                        <RenderHTML source={{ html: lesson.content }} />
                         <Text variant="bodyMedium">{lesson.created_date}</Text>
                     </Card.Content>
                 </Card>
             </>}
 
             {user === null ? <>
-                <Text>Vui lòng <Link to="login">đăng nhập</Link> để bình luận!</Text>
-            </>:<>
+                <Text>Vui lòng <Link
+                    onPress={() => nav.navigate('login', { 'next': 'lesson-details', 'params': { 'lessonId': lessonId } })}>đăng nhập</Link> để bình luận!</Text>
+            </> : <>
                 <View>
                     <TextInput placeholder="Nội dung bình luận..." value={content} onChangeText={setContent} />
                     <Button onPress={addComment}>Bình luận</Button>
                 </View>
-            </>}
-            
+            </>
+            }
 
-            {comments.map(c => <List.Item  title={c.content}
-                                description={moment(c.created_date).fromNow()}
-                                left={() => <Image style={Styles.avatar} source={{uri: c.user.avatar}} />} /> )}
 
-            
-        </ScrollView>
+            {
+                comments.map(c => <List.Item title={c.content}
+                    description={moment(c.created_date).fromNow()}
+                    left={() => <Image style={Styles.avatar} source={{ uri: c.user.avatar }} />} />)
+            }
+
+
+        </ScrollView >
     );
 }
 

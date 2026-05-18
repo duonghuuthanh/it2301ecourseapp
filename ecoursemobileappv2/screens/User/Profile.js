@@ -10,8 +10,8 @@ const Profile = () => {
         <View style={Styles.padding}>
             <Text style={Styles.subject}>THÔNG TIN NGƯỜI DÙNG</Text>
 
-            <Image source={{uri: user.avatar}} style={Styles.avatar} />
-            <Button onPress={() => dispatch({"type": LOGOUT})}>Đăng xuất</Button>
+            <Image source={{ uri: user.avatar }} style={Styles.avatar} />
+            <Button onPress={() => dispatch({ "type": "LOGOUT" })}>Đăng xuất</Button>
         </View>
     );
 }
